@@ -1,0 +1,165 @@
+---
+import { Image } from 'astro:assets';
+import logo1 from '../assets/blog-placeholder-1.jpg';
+import logo2 from '../assets/blog-placeholder-2.jpg';
+import logo3 from '../assets/blog-placeholder-3.jpg';
+
+// Hardcoded app data
+const apps = [
+	{
+		logo: logo1, // Placeholder
+		name: 'Solitaire Cash',
+		bonus: 'Win up to $83/match',
+		rating: 5,
+		url: '#', // Placeholder link
+	},
+	{
+		logo: logo2, // Placeholder
+		name: 'Solitaire Cube',
+		bonus: 'Win up to $60/match',
+		rating: 5,
+		url: '#',
+	},
+	{
+		logo: logo3, // Placeholder
+		name: 'Blitz',
+		bonus: 'Play multiple games',
+		rating: 4,
+		url: '#',
+	},
+];
+
+const renderStars = (rating: number) => {
+	let stars = '';
+	for (let i = 0; i < 5; i++) {
+		stars += i < rating ? '★' : '☆';
+	}
+	return stars;
+};
+---
+
+<section id="apps" class="app-comparison">
+	<h2>Top 3 Real Money Solitaire Apps</h2>
+	<div class="table">
+		<div class="table-header">
+			<div>App</div>
+			<div>Bonus</div>
+			<div>Rating</div>
+			<div></div>
+		</div>
+		{
+			apps.map((app) => (
+				<div class="table-row">
+				<div class="app-info">
+					<Image src={app.logo} alt={`${app.name} logo`} class="app-logo" width={48} height={48} />
+					<span>{app.name}</span>
+				</div>
+					<div class="bonus-offer">{app.bonus}</div>
+					<div class="rating">{renderStars(app.rating)}</div>
+					<div>
+						<a href={app.url} class="button button-primary" target="_blank" rel="noopener noreferrer">
+							Play Now
+						</a>
+					</div>
+				</div>
+			))
+		}
+	</div>
+</section>
+
+<style>
+	.app-comparison {
+		padding: 4rem 0;
+		width: 960px;
+		max-width: calc(100% - 2em);
+		margin: auto;
+	}
+	.app-comparison h2 {
+		text-align: center;
+		font-size: 2.5rem;
+		margin-bottom: 2.5rem;
+	}
+	.table {
+		background: #fff;
+		border-radius: 16px;
+		padding: 1.5rem;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+		border: 1px solid #eee;
+	}
+	.table-header,
+	.table-row {
+		display: grid;
+		grid-template-columns: 2fr 2fr 1fr 1fr;
+		gap: 1rem;
+		align-items: center;
+		padding: 1rem 0;
+	}
+	.table-header {
+		font-weight: 600;
+		color: rgb(var(--gray));
+		border-bottom: 1px solid #eee;
+		text-transform: uppercase;
+		font-size: 0.9em;
+		padding-bottom: 1.5rem;
+	}
+	.table-row {
+		border-bottom: 1px solid #eee;
+	}
+	.table-row:last-child {
+		border-bottom: none;
+	}
+	.app-info {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		font-weight: 600;
+	}
+	.app-logo {
+		width: 48px;
+		height: 48px;
+		border-radius: 8px;
+		object-fit: cover;
+	}
+	.bonus-offer {
+		color: rgb(var(--gray-dark));
+	}
+	.rating {
+		font-size: 1.2rem;
+		color: var(--accent-gold);
+	}
+	.button {
+		display: inline-block;
+		padding: 0.8rem 1.6rem;
+		border-radius: 8px;
+		text-decoration: none;
+		font-size: 1rem;
+		font-weight: 600;
+		text-align: center;
+	}
+	.button-primary {
+		background-color: var(--accent-gold);
+		color: #fff;
+	}
+
+	@media (max-width: 720px) {
+		.table-header {
+			display: none;
+		}
+		.table-row {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+			padding: 1.5rem 0;
+			text-align: center;
+		}
+		.app-info {
+			flex-direction: column;
+			font-size: 1.2rem;
+		}
+		.bonus-offer {
+			font-size: 1.1rem;
+		}
+		.rating {
+			margin-bottom: 1rem;
+		}
+	}
+</style>
