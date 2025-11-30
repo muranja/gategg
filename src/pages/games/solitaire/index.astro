@@ -1,0 +1,195 @@
+---
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+
+const pageTitle = "Play Solitaire | Solitaire CC";
+const pageDescription = "Play classic solitaire online. Free, no registration required.";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<BaseHead title={pageTitle} description={pageDescription} />
+		<style>
+			main {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 2rem 1rem;
+			}
+
+			h1 {
+				text-align: center;
+				margin-bottom: 2rem;
+				color: #333;
+			}
+
+			.game-wrapper {
+				background: #fff;
+				border-radius: 8px;
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+				padding: 2rem;
+				margin-bottom: 2rem;
+			}
+
+			.game-placeholder {
+				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+				border-radius: 8px;
+				padding: 4rem 2rem;
+				text-align: center;
+				color: white;
+				min-height: 500px;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.game-placeholder h2 {
+				font-size: 2rem;
+				margin-bottom: 1rem;
+			}
+
+			.game-placeholder p {
+				font-size: 1.1rem;
+				margin-bottom: 2rem;
+			}
+
+			.controls {
+				display: flex;
+				gap: 1rem;
+				justify-content: center;
+				flex-wrap: wrap;
+				margin-top: 2rem;
+			}
+
+			.btn {
+				display: inline-block;
+				padding: 0.75rem 1.5rem;
+				background-color: #0969da;
+				color: white;
+				text-decoration: none;
+				border-radius: 4px;
+				transition: background-color 0.3s;
+				border: none;
+				cursor: pointer;
+				font-size: 1rem;
+			}
+
+			.btn:hover {
+				background-color: #0860ca;
+			}
+
+			.btn-secondary {
+				background-color: #6c757d;
+			}
+
+			.btn-secondary:hover {
+				background-color: #5c636a;
+			}
+
+			.stats {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+				gap: 1rem;
+				margin-top: 2rem;
+			}
+
+			.stat-box {
+				background: #f5f5f5;
+				padding: 1rem;
+				border-radius: 4px;
+				text-align: center;
+				border: 1px solid #ddd;
+			}
+
+			.stat-box h3 {
+				margin: 0;
+				color: #666;
+				font-size: 0.9rem;
+				text-transform: uppercase;
+			}
+
+			.stat-box .value {
+				font-size: 2rem;
+				font-weight: bold;
+				color: #0969da;
+				margin-top: 0.5rem;
+			}
+
+			.instructions {
+				background: #e7f3ff;
+				border-left: 4px solid #0969da;
+				padding: 1.5rem;
+				margin-top: 2rem;
+				border-radius: 4px;
+			}
+
+			.instructions h3 {
+				margin-top: 0;
+				color: #0969da;
+			}
+
+			.instructions ul {
+				margin: 1rem 0;
+				padding-left: 1.5rem;
+			}
+
+			.instructions li {
+				margin: 0.5rem 0;
+				color: #333;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>🎮 Classic Solitaire</h1>
+
+			<div class="game-wrapper">
+				<div class="game-placeholder">
+					<h2>Solitaire Game Board</h2>
+					<p>Interactive game coming soon!</p>
+					<p style="font-size: 0.9rem; opacity: 0.9;">Game embedded here</p>
+				</div>
+
+				<div class="controls">
+					<button class="btn">New Game</button>
+					<button class="btn btn-secondary">Undo</button>
+					<button class="btn btn-secondary">Hint</button>
+				</div>
+
+				<div class="stats">
+					<div class="stat-box">
+						<h3>Moves</h3>
+						<div class="value">0</div>
+					</div>
+					<div class="stat-box">
+						<h3>Time</h3>
+						<div class="value">00:00</div>
+					</div>
+					<div class="stat-box">
+						<h3>Score</h3>
+						<div class="value">0</div>
+					</div>
+					<div class="stat-box">
+						<h3>Win Rate</h3>
+						<div class="value">0%</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="instructions">
+				<h3>How to Play Classic Solitaire</h3>
+				<ul>
+					<li><strong>Objective:</strong> Move all cards from the tableau to the foundation in suit order from Ace to King.</li>
+					<li><strong>Tableau:</strong> Build descending sequences of alternating colors.</li>
+					<li><strong>Foundation:</strong> Build sequences in suit from Ace (bottom) to King (top).</li>
+					<li><strong>Stock:</strong> Click the stock pile to draw new cards.</li>
+					<li><strong>Strategy:</strong> Plan ahead and use the undo button wisely!</li>
+				</ul>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>

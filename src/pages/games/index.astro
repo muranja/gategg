@@ -1,0 +1,181 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const pageTitle = "Games | Solitaire CC";
+const pageDescription = "Play classic solitaire and explore our collection of coming soon card games.";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<BaseHead title={pageTitle} description={pageDescription} />
+		<style>
+			.games-container {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+				gap: 2rem;
+				padding: 2rem 0;
+				max-width: 1200px;
+				margin: 0 auto;
+			}
+
+			.game-card {
+				border: 1px solid #ccc;
+				border-radius: 8px;
+				padding: 2rem;
+				text-align: center;
+				transition: all 0.3s ease;
+				background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+			}
+
+			.game-card:hover {
+				transform: translateY(-4px);
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+			}
+
+			.game-card.coming-soon {
+				opacity: 0.8;
+				position: relative;
+			}
+
+			.game-card h3 {
+				margin: 1rem 0;
+				color: #333;
+				font-size: 1.5rem;
+			}
+
+			.game-card p {
+				color: #666;
+				margin-bottom: 1.5rem;
+				font-size: 0.95rem;
+			}
+
+			.game-icon {
+				font-size: 3rem;
+				margin-bottom: 1rem;
+			}
+
+			.btn {
+				display: inline-block;
+				padding: 0.75rem 1.5rem;
+				background-color: #0969da;
+				color: white;
+				text-decoration: none;
+				border-radius: 4px;
+				transition: background-color 0.3s;
+				border: none;
+				cursor: pointer;
+				font-size: 1rem;
+			}
+
+			.btn:hover {
+				background-color: #0860ca;
+			}
+
+			.btn-coming-soon {
+				background-color: #6c757d;
+				cursor: not-allowed;
+			}
+
+			.btn-coming-soon:hover {
+				background-color: #6c757d;
+			}
+
+			.coming-soon-badge {
+				display: inline-block;
+				background-color: #ffc107;
+				color: #000;
+				padding: 0.5rem 1rem;
+				border-radius: 20px;
+				font-size: 0.85rem;
+				font-weight: bold;
+				margin-bottom: 1rem;
+			}
+
+			main {
+				padding: 2rem 1rem;
+			}
+
+			h1 {
+				text-align: center;
+				margin-bottom: 1rem;
+				color: #333;
+			}
+
+			.games-intro {
+				text-align: center;
+				margin-bottom: 3rem;
+				color: #666;
+				font-size: 1.1rem;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Our Games Collection</h1>
+			<p class="games-intro">
+				Enjoy our classic solitaire game and stay tuned for more exciting card games coming soon!
+			</p>
+
+			<div class="games-container">
+				<!-- Solitaire Game -->
+				<div class="game-card">
+					<div class="game-icon">🃏</div>
+					<h3>Classic Solitaire</h3>
+					<p>Play the timeless card game that sharpens your mind and relieves stress. Enjoy smooth gameplay and multiple difficulty levels.</p>
+					<a href="/games/solitaire" class="btn">Play Now</a>
+				</div>
+
+				<!-- Freecell - Coming Soon -->
+				<div class="game-card coming-soon">
+					<div class="coming-soon-badge">Coming Soon</div>
+					<div class="game-icon">🎴</div>
+					<h3>Freecell</h3>
+					<p>A challenging solitaire variant with strategic depth. Test your skills in this fast-paced card game.</p>
+					<button class="btn btn-coming-soon" disabled>Coming Soon</button>
+				</div>
+
+				<!-- Spider Solitaire - Coming Soon -->
+				<div class="game-card coming-soon">
+					<div class="coming-soon-badge">Coming Soon</div>
+					<div class="game-icon">🕷️</div>
+					<h3>Spider Solitaire</h3>
+					<p>Build sequences and clear the board in this exciting solitaire variation. Multiple difficulty levels available.</p>
+					<button class="btn btn-coming-soon" disabled>Coming Soon</button>
+				</div>
+
+				<!-- Pyramid - Coming Soon -->
+				<div class="game-card coming-soon">
+					<div class="coming-soon-badge">Coming Soon</div>
+					<div class="game-icon">🔺</div>
+					<h3>Pyramid</h3>
+					<p>Match pairs that sum to 13 and clear the pyramid. A unique and addictive solitaire experience.</p>
+					<button class="btn btn-coming-soon" disabled>Coming Soon</button>
+				</div>
+
+				<!-- Klondike - Coming Soon -->
+				<div class="game-card coming-soon">
+					<div class="coming-soon-badge">Coming Soon</div>
+					<div class="game-icon">♠️</div>
+					<h3>Klondike</h3>
+					<p>The classic Klondike solitaire with fast-paced action. Build foundations and clear the deck.</p>
+					<button class="btn btn-coming-soon" disabled>Coming Soon</button>
+				</div>
+
+				<!-- Tri-Peaks - Coming Soon -->
+				<div class="game-card coming-soon">
+					<div class="coming-soon-badge">Coming Soon</div>
+					<div class="game-icon">⛰️</div>
+					<h3>Tri-Peaks</h3>
+					<p>Remove cards in sequence across three peaks. Strategic gameplay meets quick decision-making.</p>
+					<button class="btn btn-coming-soon" disabled>Coming Soon</button>
+				</div>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
