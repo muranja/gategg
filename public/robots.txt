@@ -3,6 +3,3 @@ Allow: /
 
 # Sitemaps
 Sitemap: https://solitairecc.com/sitemap-index.xml
-
-# Crawl delays for respectful indexing
-Crawl-delay: 1
