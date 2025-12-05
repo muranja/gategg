@@ -7,7 +7,9 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = Omit<CollectionEntry<'blog'>['data'], 'heroImage'> & {
+	heroImage?: string | { src?: string; url?: string; alt?: string };
+};
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 
@@ -110,7 +112,16 @@ const relatedPosts = sortedPosts.slice(0, 4).filter(post => post.data.title !== 
 		<main>
 			<article>
 				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage.url} alt={heroImage.alt} />}
+					{(() => {
+						let imgSrc, imgAlt = 'Hero image';
+						if (typeof heroImage === 'string') {
+							imgSrc = heroImage;
+						} else if (heroImage && (heroImage.src || heroImage.url)) {
+							imgSrc = heroImage.src || heroImage.url;
+							imgAlt = heroImage.alt || 'Hero image';
+						}
+						return imgSrc ? <Image width={1020} height={510} src={imgSrc} alt={imgAlt} /> : null;
+					})()}
 				</div>
 				<div class="prose">
 					<div class="title">
