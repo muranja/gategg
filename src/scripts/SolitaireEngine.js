@@ -783,7 +783,14 @@ export class Solitaire {
             this.state.tableau.forEach((col, i) => {
                 const colEl = document.createElement('div'); colEl.className = 'tableau-col';
                 if(col.length===0) colEl.classList.add('empty-col'); colEl.dataset.idx = i;
-                let offset = 35; if(col.length > 8) offset = 30; if(col.length > 12) offset = 25;
+                
+                // --- FIXED VERTICAL SPACING FOR MOBILE ---
+                const isMobile = window.innerWidth <= 600;
+                let offset = isMobile ? 25 : 35; 
+                if(col.length > 8) offset = isMobile ? 20 : 30; 
+                if(col.length > 12) offset = isMobile ? 15 : 25;
+                // ------------------------------------------
+
                 col.forEach((c, idx) => {
                     const cardEl = this.createCard(c, `tableau-${i}-${idx}`); 
                     cardEl.style.top = (idx * offset) + 'px';
