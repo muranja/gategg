@@ -21,8 +21,8 @@ const posts = (await getCollection('blog')).sort(
 				width: 960px;
 			}
 			ul {
-				display: flex;
-				flex-wrap: wrap;
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
 				gap: 2rem;
 				list-style-type: none;
 				margin: 0;
@@ -69,19 +69,35 @@ const posts = (await getCollection('blog')).sort(
 			ul a:hover img {
 				box-shadow: var(--box-shadow);
 			}
-			@media (max-width: 720px) {
+			@media (max-width: 768px) {
 				ul {
-					gap: 0.5em;
+					grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+					gap: 1.5rem;
+				}
+				ul li {
+					width: auto;
+				}
+				ul li a {
+					padding: 0.5rem;
+				}
+				ul li img {
+					height: 180px;
+				}
+			}
+			@media (max-width: 480px) {
+				ul {
+					grid-template-columns: 1fr;
+					gap: 1rem;
 				}
 				ul li {
 					width: 100%;
-					text-align: center;
+					max-width: 100%;
 				}
-				ul li:first-child {
-					margin-bottom: 0;
+				ul li img {
+					height: 160px;
 				}
-				ul li:first-child .title {
-					font-size: 1.563em;
+				ul li a {
+					padding: 0.25rem;
 				}
 			}
 		</style>
@@ -97,7 +113,7 @@ const posts = (await getCollection('blog')).sort(
 							<li>
 							<a href={`/blog/${post.id}/`}>
 								{post.data.heroImage && (
-									<Image width={720} height={360} src={post.data.heroImage} alt={post.data.title} />
+									<Image width={720} height={360} src={post.data.heroImage.url} alt={post.data.heroImage.alt} />
 								)}
 									<h4 class="title">{post.data.title}</h4>
 									<p class="date">

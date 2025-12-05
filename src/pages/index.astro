@@ -24,7 +24,7 @@ const posts = (await getCollection('blog')).sort(
 				padding: 4rem 0;
 			}
 			.hero h1 {
-				font-size: 3.5rem;
+				font-size: clamp(2rem, 8vw, 3.5rem);
 				font-weight: 700;
 				margin-bottom: 0.5rem;
 				line-height: 1.2;
@@ -58,6 +58,7 @@ const posts = (await getCollection('blog')).sort(
 				border: 2px solid var(--accent-gold);
 				font-weight: 600;
 				box-shadow: 0 4px 12px rgba(244, 180, 0, 0.2);
+				min-height: 48px;
 			}
 			.button-primary:hover {
 				background-color: #FCD34D;
@@ -67,6 +68,7 @@ const posts = (await getCollection('blog')).sort(
 				background-color: transparent;
 				color: var(--accent);
 				border: 2px solid var(--accent);
+				min-height: 48px;
 			}
 			.button-secondary:hover {
 				background-color: rgba(26, 115, 232, 0.05);
@@ -139,6 +141,66 @@ const posts = (await getCollection('blog')).sort(
 				text-transform: uppercase;
 				letter-spacing: 0.5px;
 			}
+
+			@media (max-width: 768px) {
+				.hero {
+					padding: 2rem 1rem;
+				}
+				.hero h1 {
+					font-size: clamp(1.8rem, 10vw, 2.5rem);
+				}
+				.hero p {
+					font-size: 1.1rem;
+				}
+				.cta-buttons {
+					flex-direction: column;
+					align-items: center;
+					gap: 1rem;
+				}
+				.button {
+					font-size: 1rem;
+					padding: 1rem 2rem;
+					min-width: 250px;
+					min-height: 50px;
+				}
+				#latest-posts {
+					padding: 2rem 0;
+				}
+				#latest-posts h2 {
+					font-size: 2rem;
+					margin-bottom: 2rem;
+				}
+				#latest-posts ul {
+					grid-template-columns: 1fr;
+					gap: 1.5rem;
+				}
+				#latest-posts li {
+					max-width: 100%;
+				}
+			}
+
+			@media (max-width: 480px) {
+				.hero {
+					padding: 1.5rem 0.5rem;
+				}
+				.hero h1 {
+					font-size: clamp(1.5rem, 12vw, 2rem);
+				}
+				.hero p {
+					font-size: 1rem;
+				}
+				.button {
+					min-width: 200px;
+					min-height: 48px;
+					font-size: 0.95rem;
+				}
+				#latest-posts {
+					padding: 1.5rem 0;
+				}
+				#latest-posts h2 {
+					font-size: 1.5rem;
+				}
+			}
 		</style>
 	</head>
 	<body>
@@ -163,7 +225,7 @@ const posts = (await getCollection('blog')).sort(
 							<li>
 								<a href={`/blog/${post.id}/`}>
 									{post.data.heroImage ? (
-										<Image width={720} height={360} src={post.data.heroImage} alt={post.data.title} />
+										<Image width={720} height={360} src={post.data.heroImage.url} alt={post.data.heroImage.alt} />
 									) : (
 										<Image width={720} height={360} src={FallbackImage} alt={post.data.title} />
 									)}

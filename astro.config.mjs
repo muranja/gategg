@@ -8,4 +8,10 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
 	site: 'https://solitairecc.com',
 	integrations: [mdx(), sitemap()],
+	image: {
+		remotePatterns: [
+			{ protocol: 'https', hostname: 'images.pexels.com' },
+			{ protocol: 'https', hostname: 'images.unsplash.com' }
+		],
+	},
 });

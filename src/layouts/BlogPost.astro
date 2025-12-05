@@ -110,7 +110,7 @@ const relatedPosts = sortedPosts.slice(0, 4).filter(post => post.data.title !== 
 		<main>
 			<article>
 				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt={title} />}
+					{heroImage && <Image width={1020} height={510} src={heroImage.url} alt={heroImage.alt} />}
 				</div>
 				<div class="prose">
 					<div class="title">
@@ -135,7 +135,7 @@ const relatedPosts = sortedPosts.slice(0, 4).filter(post => post.data.title !== 
 							<ul>
 								{relatedPosts.slice(0, 3).map((post) => (
 									<li>
-										<a href={`/blog/${post.slug}/`}>
+										<a href={`/blog/${post.id}/`}>
 											<h3>{post.data.title}</h3>
 											<p class="date">
 												<FormattedDate date={post.data.pubDate} />
