@@ -190,7 +190,7 @@ const pageDescription = "Play the ultimate free online Klondike Solitaire. Featu
             }
             #game-wrapper .drag-active {
                 position: absolute !important; 
-                z-index: 2147483647 !important; /* UPDATED: Always on top */
+                z-index: 2147483647 !important; /* Always on top */
                 pointer-events: none;
                 width: var(--card-w); height: var(--card-h); transition: transform 0.05s linear;
                 /* Allow drag ghost to handle transforms for snapping */
@@ -852,28 +852,66 @@ const pageDescription = "Play the ultimate free online Klondike Solitaire. Featu
                     this.render(); this.checkAutoWinCondition();
                 }
 
-                /* --- UPDATED: Double Click Logic --- */
+                /* --- UPDATED: Double Click Logic & Helpers --- */
                 tryAutoMoveCard(card, currentLoc) {
                     if (this.autoPlaying || this.paused) return;
-                    if (currentLoc.startsWith('foundation')) return;
 
-                    const fIdx = this.suits.indexOf(card.suit);
-                    const pile = this.state.foundations[fIdx];
-                    const top = pile.length ? pile.at(-1) : null;
-
-                    if ((!top && card.rank === 1) || (top && card.rank === top.rank + 1)) {
-                        const target = { type: 'foundation', idx: fIdx };
-                        let stack = [card];
-                        
-                        // Hack: mock dragItem for executeMove to know where to pop from
-                        this.dragItem = { loc: currentLoc, stack: stack }; 
-                        this.executeMove(target, stack);
-                        this.dragItem = null;
-                        
-                        this.audio.playWhoosh();
-                        this.render();
-                        this.checkAutoWinCondition();
+                    // 1. Identify the stack being moved
+                    let stack = [card];
+                    if (currentLoc.startsWith('tableau')) {
+                        const parts = currentLoc.split('-');
+                        const cIdx = parseInt(parts[1]);
+                        const rIdx = parseInt(parts[2]);
+                        stack = this.state.tableau[cIdx].slice(rIdx);
                     }
+
+                    // 2. Try Move to Foundation (Only allowed for single cards)
+                    if (stack.length === 1 && !currentLoc.startsWith('foundation')) {
+                        const fIdx = this.suits.indexOf(card.suit);
+                        const pile = this.state.foundations[fIdx];
+                        const top = pile.length ? pile.at(-1) : null;
+
+                        if ((!top && card.rank === 1) || (top && card.rank === top.rank + 1)) {
+                            const target = { type: 'foundation', idx: fIdx };
+                            this.performMove(target, stack, currentLoc);
+                            return;
+                        }
+                    }
+
+                    // 3. Try Move to Tableau
+                    for (let i = 0; i < 7; i++) {
+                        // Skip current column
+                        if (currentLoc.startsWith(`tableau-${i}`)) continue;
+
+                        const destCol = this.state.tableau[i];
+                        const destTop = destCol.length ? destCol.at(-1) : null;
+                        const movingCard = stack[0]; 
+
+                        let isValid = false;
+                        if (!destTop) {
+                            // Only Kings to empty slots
+                            if (movingCard.rank === 13) isValid = true;
+                        } else {
+                            if (movingCard.color !== destTop.color && movingCard.rank === destTop.rank - 1) {
+                                isValid = true;
+                            }
+                        }
+
+                        if (isValid) {
+                            const target = { type: 'tableau', idx: i };
+                            this.performMove(target, stack, currentLoc);
+                            return;
+                        }
+                    }
+                }
+
+                performMove(target, stack, currentLoc) {
+                    this.dragItem = { loc: currentLoc, stack: stack }; 
+                    this.executeMove(target, stack);
+                    this.dragItem = null;
+                    this.audio.playWhoosh();
+                    this.render();
+                    this.checkAutoWinCondition();
                 }
 
                 startDrag(e, cardData, loc) {
@@ -1010,7 +1048,15 @@ const pageDescription = "Play the ultimate free online Klondike Solitaire. Featu
                         
                         let targetRect;
                         if (isEmpty) {
-                            targetRect = colEl.getBoundingClientRect();
+                            // FIX: Use the column's position but restrict height to a single card
+                            // This ensures the "center" is at the top slot, not the middle of the screen
+                            const colRect = colEl.getBoundingClientRect();
+                            targetRect = {
+                                left: colRect.left,
+                                top: colRect.top,
+                                width: colRect.width,
+                                height: ghostRect.height // Virtual height of one card
+                            };
                         } else {
                             targetRect = cards[cards.length-1].getBoundingClientRect();
                         }
@@ -1020,8 +1066,11 @@ const pageDescription = "Play the ultimate free online Klondike Solitaire. Featu
                         const top = col.length ? col.at(-1) : null;
                         let isValid = false;
                         
-                        // --- MODIFIED LOGIC: Allow any card on empty column ---
-                        if(!top) isValid = true; 
+                        // --- STANDARD LOGIC: Only Kings on empty column ---
+                        if(!top) {
+                            // Only allow Kings (Rank 13) to drag to empty slot
+                            if (moving.rank === 13) isValid = true;
+                        } 
                         else if(moving.color !== top.color && moving.rank === top.rank - 1) isValid = true;
                         
                         if (isValid) {
@@ -1080,8 +1129,10 @@ const pageDescription = "Play the ultimate free online Klondike Solitaire. Featu
                             const top = col.length ? col.at(-1) : null;
                             let valid = false; 
                             
-                            // --- MODIFIED LOGIC: Allow any card on empty column ---
-                            if(!top) valid = true;
+                            // --- STANDARD LOGIC: Only Kings on empty column ---
+                            if(!top) {
+                                if(primary.rank === 13) valid = true;
+                            }
                             else if(primary.color !== top.color && primary.rank === top.rank - 1) valid = true;
                             
                             if(valid) { 
