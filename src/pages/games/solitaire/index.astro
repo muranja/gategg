@@ -61,9 +61,15 @@ const pageDescription = "Play the ultimate free online Klondike Solitaire. Featu
 
             @media (max-width: 600px) {
                 #game-wrapper { --card-w: 45px; --card-h: 65px; --gap: 8px; margin: 0; border-radius: 0; height: 90vh; }
-                #game-wrapper .brand-text { display: none; } 
+                #game-wrapper .brand-text { display: none; }
                 #game-wrapper .controls button span { display: none; }
                 #game-wrapper .controls button { padding: 8px !important; }
+            }
+
+            @media (max-width: 400px) {
+                #game-wrapper { --card-w: 35px; --card-h: 50px; --gap: 5px; }
+                #board { padding: 8px; }
+                #game-wrapper .card { font-size: 10px; padding: 2px; }
             }
 
             /* --- GAME HEADER --- */
