@@ -261,15 +261,16 @@ const posts = (await getCollection('blog')).sort(
 		</style>
 	</head>
 	<body>
+		<a href="#main-content" class="skip-link">Skip to main content</a>
 		<Header />
-		<main>
-			<section class="hero">
-				<h1>Turn Your Solitaire Addiction into a Money-Making Machine</h1>
+		<main id="main-content">
+			<section class="hero" aria-labelledby="hero-heading">
+				<h1 id="hero-heading">Turn Your Solitaire Addiction into a Money-Making Machine</h1>
 				<p class="hero-subtitle">The #1 trusted guide to skill-based apps where players win <strong>$50-$100 per match</strong>. Join 250,000+ winning $1M+ combined payouts.</p>
-				<div class="trust-badges">
-					<div class="trust-badge">⭐ Trusted by Gaming Experts</div>
-					<div class="trust-badge">🔒 100% Risk-Free Claims</div>
-					<div class="trust-badge">💰 Average Win: $45.67/match</div>
+				<div class="trust-badges" role="group" aria-label="Trust indicators">
+					<div class="trust-badge" aria-label="Trusted by gaming experts - indicates credibility">⭐ Trusted by Gaming Experts</div>
+					<div class="trust-badge" aria-label="100% risk-free claims - guaranteed safety">🔒 100% Risk-Free Claims</div>
+					<div class="trust-badge" aria-label="Average win of $45.67 per match - typical earnings">💰 Average Win: $45.67/match</div>
 				</div>
 				<div class="urgent-notice">
 					🚨 <strong>Limited Time:</strong> Only 3 personally vetted apps we recommend
@@ -289,11 +290,11 @@ const posts = (await getCollection('blog')).sort(
 					{
 						posts.map((post) => (
 							<li>
-								<a href={`/blog/${post.id}/`}>
+								<a href={`/blog/${post.id}/`} aria-label={`Read the full article: ${post.data.title}`}>
 									{post.data.heroImage ? (
-										<Image width={720} height={360} src={post.data.heroImage.url} alt={post.data.heroImage.alt} />
+										<Image width={720} height={360} src={post.data.heroImage.url} alt={`Featured image for article: ${post.data.title}`} />
 									) : (
-										<Image width={720} height={360} src={FallbackImage} alt={post.data.title} />
+										<Image width={720} height={360} src={FallbackImage} alt={`Default illustration for article: ${post.data.title}`} />
 									)}
 									<div class="card-content">
 										<h4 class="title">{post.data.title}</h4>

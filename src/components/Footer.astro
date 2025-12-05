@@ -38,9 +38,11 @@ const today = new Date();
 			<div class="footer-section">
 				<h4>Stay Updated</h4>
 				<p>Get weekly winning tips & new app reviews</p>
-				<form class="newsletter">
-					<input type="email" placeholder="Enter your email" aria-label="Email for newsletter">
-					<button type="submit">Subscribe</button>
+				<form class="newsletter" action="#" method="post">
+					<label for="newsletter-email" class="sr-only">Email address for newsletter</label>
+					<input type="email" id="newsletter-email" name="email" placeholder="Enter your email" required aria-describedby="newsletter-help">
+					<button type="submit" aria-label="Subscribe to weekly tips">Subscribe</button>
+					<div id="newsletter-help" class="sr-only">Get weekly winning tips and new app reviews delivered to your inbox.</div>
 				</form>
 				<div class="social-links">
 					<a href="#" aria-label="Twitter">🐦</a>
