@@ -889,8 +889,8 @@ const pageDescription = "Play the ultimate free online Klondike Solitaire. Featu
 
                         let isValid = false;
                         if (!destTop) {
-                            // Only Kings to empty slots
-                            if (movingCard.rank === 13) isValid = true;
+                            // Any card to empty slots (Standard Solitaire allows only King, but user requested ANY)
+                            isValid = true;
                         } else {
                             if (movingCard.color !== destTop.color && movingCard.rank === destTop.rank - 1) {
                                 isValid = true;
@@ -1069,7 +1069,8 @@ const pageDescription = "Play the ultimate free online Klondike Solitaire. Featu
                         // --- STANDARD LOGIC: Only Kings on empty column ---
                         if(!top) {
                             // Only allow Kings (Rank 13) to drag to empty slot
-                            if (moving.rank === 13) isValid = true;
+                            // User requested ANY card to empty slot
+                            isValid = true;
                         } 
                         else if(moving.color !== top.color && moving.rank === top.rank - 1) isValid = true;
                         
@@ -1131,7 +1132,8 @@ const pageDescription = "Play the ultimate free online Klondike Solitaire. Featu
                             
                             // --- STANDARD LOGIC: Only Kings on empty column ---
                             if(!top) {
-                                if(primary.rank === 13) valid = true;
+                                // User requested ANY card
+                                valid = true;
                             }
                             else if(primary.color !== top.color && primary.rank === top.rank - 1) valid = true;
                             
